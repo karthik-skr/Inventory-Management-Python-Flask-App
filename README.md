@@ -1,10 +1,10 @@
-## MapQuest-Geo-Code-Excel-Upload-Python
+## Inventory-Management-Python-Flask-App
 
 - Clone the repository in your system.
 
 - Recommend python version:  Python 3.8.5
 
-- Please install mysql and create inventory_db database or you can configure `SQLALCHEMY_DATABASE_URI` in `Inventory-Management\inventory_app\__init__.py`
+- Please install mysql and create inventory_db database or you can configure `SQLALCHEMY_DATABASE_URI` in `Inventory-Management\inventory_app\__init__.py`, then it automatically creates tables
 
 - Create a virtual environment and activate it. 
 
