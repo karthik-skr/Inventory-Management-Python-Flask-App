@@ -14,8 +14,6 @@
 
 - Go to `localhost:5000` 
 
-- Happy learning!!!
-
 
 ### Adding Products,Warehouses, Alloating products to warehouses, Logs and Summary 
 We can add required products,,Warehouses, Alloating products to warehouses. Then we can see Logs, Summary
@@ -47,3 +45,5 @@ We can add required products,,Warehouses, Alloating products to warehouses. Then
 
 
 
+
+## Happy learning!!!
