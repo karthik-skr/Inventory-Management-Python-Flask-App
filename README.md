@@ -20,5 +20,30 @@
 ### Adding Products,Warehouses, Alloating products to warehouses, Logs and Summary 
 We can add required products,,Warehouses, Alloating products to warehouses. Then we can see Logs, Summary
 
-
+#### Adding Product
 ![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/add_product.png)
+
+
+#### Products List
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/product_list.png)
+
+#### Adding Warehouse
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/add_wh.png)
+
+#### Warehouses List
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/wh_list.png)
+
+#### Allocating Product to Warehouse
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/allocate_product.png)
+
+#### Product Allocation List
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/allocation_list.png)
+
+#### Product Allocation Logs
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/allocation_log.png)
+
+#### Summary
+![adding](https://github.com/karthik-skr/Inventory-Management-Python-Flask-App/blob/master/readme_images/summary.png)
+
+
+
