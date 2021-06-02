@@ -1,0 +1,94 @@
+{% extends "nav_bar.html" %}
+{% block content %}
+    <script>
+        $(document).ready(function(){
+            let warehouses = [];
+            {% for warehouse in warehouses %}
+                warehouses.push({'warehouse_id':{{warehouse.warehouse_id}},'warehouse_name':'{{warehouse.warehouse_name}}'})
+            {%endfor%}
+            $("[name='edit_warehouse']").click(function(){
+                let warehouse_id = Number($(this).attr("warehouse_id"));
+                console.log(warehouse_id,warehouses)
+                let warehouseObj =  warehouses.find(v => v["warehouse_id"] == warehouse_id);
+                $("#editwarehouseModal").find("[name='warehouse_id']").val(warehouseObj["warehouse_id"]);
+                $("#editwarehouseModal").find("[name='warehouse_name']").val(warehouseObj["warehouse_name"]);
+                $("#editwarehouseModal").find("[name='actual_warehouse_name']").val(warehouseObj["warehouse_name"]);
+            })                        
+        })
+    </script>
+    <div class="modal fade" id="editwarehouseModal" tabindex="-1" role="dialog" aria-labelledby="editwarehouseModalLable" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit warehouse</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-cont" class="modal-body" >
+                <form  action="/warehouse/update" method="POST">
+                    <input type="hidden" name="warehouse_id">
+                    <input type="hidden" name="actual_warehouse_name">
+                    <div class="form-group"><label for="warehouse_id"><strong>Warehouse ID : </strong></label><input type="text" class="form-control" name="warehouse_id" readonly></div>
+                    <div class="form-group"><label for="warehouse_name"><strong>warehouse Name : </strong></label><input type="text" class="form-control" name="warehouse_name" required></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addwarehouseModal" tabindex="-1" role="dialog" aria-labelledby="addwarehouseModalLable" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Add warehouse</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-cont" class="modal-body" >
+                <form  action="/warehouse/add" method="POST">
+                    <div class="form-group"><label for="warehouse_name"><strong>warehouse Name : </strong></label><input type="text" class="form-control" name="warehouse_name" required></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+            </form>
+        </div>
+        </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <h3 style="display: inline-block;margin:0;">Warehouses List</h3>
+            <button type="button" class="btn btn-add" data-toggle="modal" data-target="#addwarehouseModal">
+            <span class="btn-icon-add"><i class="icofont icofont-plus"></i></span>Add warehouse</button>
+        </div>
+            <table class="table table-hover">
+                <thead>
+                    <th>warehouse ID</th>
+                    <th>warehouse Name</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    {% for warehouse in warehouses %}
+                        <tr>
+                            <td >{{warehouse.warehouse_id}}</td>
+                            <td >{{warehouse.warehouse_name}}</td>
+                            <td>
+                                <div>
+                                    <a href="/warehouse/delete?warehouse_id={{warehouse.warehouse_id}}" data-method="delete" class="btn btn-sm btn-danger" style="margin-left: 5px;"><i class="icofont-trash"></i></a>
+                                    <button type="button" name="edit_warehouse" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editwarehouseModal" warehouse_id="{{ warehouse.warehouse_id }}"><i class="icofont-edit" ></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

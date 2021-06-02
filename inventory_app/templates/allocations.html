@@ -1,0 +1,128 @@
+{% extends "nav_bar.html" %}
+{% block content %}
+    <script>
+        $(document).ready(function(){
+            let allocations = [];
+            {% for allocation_obj in allocations%}
+                allocations.push({'aid':{{allocation_obj.aid}},'product_name': '{{ allocation_obj.product_name }}','warehouse_name':'{{allocation_obj.warehouse_name}}','available_quantity':{{allocation_obj.available_quantity}},'reserved_qunatity':{{allocation_obj.reserved_qunatity}},'damaged_quantity':{{allocation_obj.damaged_quantity}} })
+            {%endfor%}
+            $("[name='edit_allocation']").click(function(){
+                let aid = Number($(this).attr("aid"));
+                let allocationObj =  allocations.find(v => v["aid"] == aid);
+                $("#editAllocationModal").find("[name='product_name']").val(allocationObj["product_name"]);
+                $("#editAllocationModal").find("[name='warehouse_name']").val(allocationObj["warehouse_name"]);
+                $("#editAllocationModal").find("[name='available_quantity']").val(allocationObj['available_quantity']);
+                $("#editAllocationModal").find("[name='reserved_qunatity']").val(allocationObj['reserved_qunatity']);
+                $("#editAllocationModal").find("[name='damaged_quantity']").val(allocationObj['damaged_quantity']);
+                $("#editAllocationModal").find("[name='aid']").val(allocationObj['aid']);               
+            })                        
+        })
+    </script>
+    <div class="modal fade" id="editAllocationModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLable" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Allocation</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-cont" class="modal-body" >
+                <form  action="/allocation/update" method="POST">
+                    <input type="hidden" name="aid">
+                    <div class="form-group"><label for="warehouse_name"><strong>Warehouse Name : </strong></label>
+                    <select class="form-control" name="warehouse_name" readonly required>
+                        {% for warehouse_opt in warehouses_options%}
+                            <option value={{ warehouse_opt.warehouse_name }}>{{warehouse_opt.warehouse_name}}</option>
+                        {% endfor %}
+                    </select></div>
+                    <div class="form-group"><label for="product_name"><strong>Product Name : </strong></label>
+                    <select class="form-control" name="product_name" readonly required>
+                        {% for product_opt in products_options%}
+                            <option value={{ product_opt.product_name }}>{{product_opt.product_name}}</option>
+                        {% endfor %}
+                    </select></div>
+                    <div class="form-group"><label for="available_quantity"><strong>Available Quantity : </strong></label><input type="number" class="form-control" name="available_quantity" required></div>
+                    <div class="form-group"><label for="reserved_qunatity"><strong>Reserved Quantity : </strong></label><input type="number" class="form-control" name="reserved_qunatity" value=0 required></div>
+                    <div class="form-group"><label for="damaged_quantity"><strong>Damaged Quantity : </strong></label><input type="number" class="form-control" name="damaged_quantity" value=0 required></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="modal fade" id="allocateProductModal" tabindex="-1" role="dialog" aria-labelledby="allocateProductModalLable" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Allocate Product</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-cont" class="modal-body" >
+                <form  action="/allocation/add" method="POST">
+                    <div class="form-group"><label for="product_name"><strong>Product Name : </strong></label>
+                    <select class="form-control" name="product_name" required>
+                        {% for product_opt in products_options%}
+                            <option value={{ product_opt.product_name }}>{{product_opt.product_name}}</option>
+                        {% endfor %}
+                    </select></div>
+                    <div class="form-group"><label for="warehouse_name"><strong>Warehouse Name : </strong></label>
+                    <select class="form-control" name="warehouse_name" required>
+                        {% for warehouse_opt in warehouses_options%}
+                            <option value={{ warehouse_opt.warehouse_name }}>{{warehouse_opt.warehouse_name}}</option>
+                        {% endfor %}
+                    </select></div>
+                    <div class="form-group"><label for="available_quantity"><strong>Available Quantity : </strong></label><input type="number" class="form-control" name="available_quantity" required></div>
+                    <div class="form-group"><label for="reserved_qunatity"><strong>Reserved Quantity : </strong></label><input type="number" class="form-control" name="reserved_qunatity" value=0 required></div>
+                    <div class="form-group"><label for="damaged_quantity"><strong>Damaged Quantity : </strong></label><input type="number" class="form-control" name="damaged_quantity" value=0 required></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+            </form>
+        </div>
+        </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div>
+            <h3 style="display: inline-block;margin:0;">Warehouse Allocation</h3>
+            <button type="button" class="btn btn-add" data-toggle="modal" data-target="#allocateProductModal">
+            <span class="btn-icon-add"><i class="icofont icofont-plus"></i></span>Allocate Product</button>
+        </div>
+            <table class="table table-hover">
+                <thead>
+                    <th>Warehouse Name</th>
+                    <th>Proudct Name</th>
+                    <th>Available Quantity</th>
+                    <th>Reserved Qunatity</th>
+                    <th>Damaged Quantity</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    {% for allocation_obj in allocations %}
+                        <tr>
+                            <td >{{allocation_obj.warehouse_name}}</td>
+                            <td >{{allocation_obj.product_name}}</td>
+                            <td >{{allocation_obj.available_quantity}}</td>
+                            <td >{{allocation_obj.reserved_qunatity}}</td>
+                            <td >{{allocation_obj.damaged_quantity}}</td>
+                            <td>
+                                <div>
+                                    <a href="/allocation/delete?aid={{allocation_obj.aid}}" data-method="delete" class="btn btn-sm btn-danger" style="margin-left: 5px;"><i class="icofont-trash"></i></a>
+                                    <button type="button" name="edit_allocation" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editAllocationModal" aid="{{ allocation_obj.aid }}"><i class="icofont-edit" ></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

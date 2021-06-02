@@ -1,0 +1,35 @@
+{% extends "nav_bar.html" %}
+{% block content %}
+    <script>
+    </script>
+    <div class="container">
+        <div>
+            <h3 style="display: inline-block;margin:0;">Warehouse Allocation</h3>
+        </div>
+            <table class="table table-hover">
+                <thead>
+                    <th>Date Time</th>
+                    <th>Warehouse Name</th>
+                    <th>Proudct Name</th>
+                    <th>Available Quantity</th>
+                    <th>Reserved Qunatity</th>
+                    <th>Damaged Quantity</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    {% for log_obj in allocation_logs %}
+                        <tr>
+                            <td >{{log_obj.datetime}}</td>
+                            <td >{{log_obj.warehouse_name}}</td>
+                            <td >{{log_obj.product_name}}</td>
+                            <td >{{log_obj.available_quantity}}</td>
+                            <td >{{log_obj.reserved_qunatity}}</td>
+                            <td >{{log_obj.damaged_quantity}}</td>
+                            <td >{{log_obj.action}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
