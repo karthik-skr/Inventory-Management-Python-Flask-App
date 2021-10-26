@@ -12,7 +12,7 @@
 
 - Start the python server using: `python run.py`.
 
-- Go to `localhost:5000` 
+- Go to `http://localhost:5000` 
 
 
 ### Adding Products,Warehouses, Alloating products to warehouses, Logs and Summary 
